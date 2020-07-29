@@ -1,8 +1,7 @@
 import os
 import sys
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMainWindow
 from src import Controller
 from src import Manager
 from src.Screens import main_screen
@@ -22,6 +21,8 @@ if __name__ == '__main__':
     mainScreen = main_screen.MainScreen()
     Manager.ScreenManager().create_screen(mainScreen, MAIN_SCREEN_SIZE, [300, 300],
                                           img_path('screen-icon.png'))
+    Manager.ScreenManager().create_status_bar(mainScreen, 'Ready')
+
     Controller.ScreenController().show(mainScreen)
 
     sys.exit(app.exec_())

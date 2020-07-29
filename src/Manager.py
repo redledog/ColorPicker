@@ -8,3 +8,9 @@ class ScreenManager:
         screen.move(move[0], move[1])
         if icon is not None:
             screen.setWindowIcon(QIcon(icon))
+
+    def create_status_bar(self, screen, text=None):
+        if text is not None:
+            screen.statusBar().showMessage(text)
+        else:
+            screen.statusBar()
