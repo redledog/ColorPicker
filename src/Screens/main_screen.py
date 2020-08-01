@@ -1,8 +1,7 @@
 import os
 
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QAction, qApp, QLabel, QHBoxLayout, QVBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon, QColor
+from PyQt5.QtWidgets import QAction, qApp, QLabel, QHBoxLayout, QVBoxLayout, QWidget, QColorDialog, QFrame
 from src.Screens.screen import Screen
 from src.Informations import Information as Info
 
@@ -13,11 +12,13 @@ class MainScreen(Screen):
         self.setWindowTitle('Color Picker!')
 
         self.makeMenubar()
-        #self.makeLayout()
+        self.central_widget = self.makeCentralContent()
+        self.setCentralWidget(self.central_widget)
 
         self.setWindowIcon(
             QIcon(os.path.join(Info.IMG_PATH, 'screen-icon.png'))
         )
+
 
     def makeMenubar(self):
         exitAction = QAction('Exit', self)
@@ -32,19 +33,38 @@ class MainScreen(Screen):
 
         menubar.addMenu('&Info')
 
-    def makeLayout(self):
-        label1 = QLabel('First Label', self)
-        label1.setAlignment(Qt.AlignCenter)
+    def makeCentralContent(self):
+        wg = QWidget()
+        col = QColor(0, 0, 0)
+
+        colordialog = QColorDialog()
+        colorBox = QFrame()
+
+        colordialog.setOption(QColorDialog.NoButtons)
+        colordialog.setOption(QColorDialog.ShowAlphaChannel)
+        #colordialog.setOption(QColorDialog.DontUseNativeDialog, False)
+
+        colorBox.setStyleSheet('QWidget { background-color: %s }' % col.name())
+        colorBox.setGeometry(0, 0, 100, 100)
 
         hbox = QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(label1)
-        hbox.addStretch(1)
+        hbox.addWidget(colordialog)
+
+        vbox_colorbox = QVBoxLayout()
+        #vbox_colorbox.addStretch(1)
+        vbox_colorbox.addWidget(colorBox, 1)
+        vbox_colorbox.addStretch(3)
+
+        hbox.addLayout(vbox_colorbox)
 
         vbox = QVBoxLayout()
-        vbox.addStretch(3)
+        #vbox.addStretch(1)
         vbox.addLayout(hbox)
         vbox.addStretch(1)
 
-        self.setLayout(vbox)
+        Info.MAIN_SCREEN_WIDTH += colordialog.width()
+        Info.MAIN_SCREEN_WIDTH += colorBox.width()
+
+        wg.setLayout(vbox)
+        return wg
 

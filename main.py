@@ -14,7 +14,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     mainScreen = main_screen.MainScreen()
-    mainScreen.setTransform(Info.MAIN_SCREEN_SIZE)
+    mainScreen.setFixedSize(Info.MAIN_SCREEN_WIDTH, Info.MAIN_SCREEN_HEIGHT)
+    mainScreen.moveToCenter()
     mainScreen.setStatusBar('Ready')
     mainScreen.show()
 

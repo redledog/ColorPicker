@@ -1,4 +1,3 @@
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QDesktopWidget
 
 
@@ -6,6 +5,7 @@ class Screen(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.central_widget = None
         self.init()
 
     def init(self):
